@@ -31,7 +31,7 @@ pub fn convert_temperature(
         (TemperatureUnit::Celsius, TemperatureUnit::Fahrenheit) => celsius_to_fahrenheit(value),
         (TemperatureUnit::Celsius, TemperatureUnit::Kelvin) => celsius_to_kelvin(value),
         (TemperatureUnit::Fahrenheit, TemperatureUnit::Celsius) => fahrenheit_to_celsius(value),
-        (TemperatureUnit::Fahrenheit, TemperatureUnit::Kelvin) => fahrenheit_to_kelvin(value)
+        (TemperatureUnit::Fahrenheit, TemperatureUnit::Kelvin) => fahrenheit_to_kelvin(value),
         (TemperatureUnit::Kelvin, TemperatureUnit::Celsius) => kelvin_to_celsius(value),
         (TemperatureUnit::Kelvin, TemperatureUnit::Fahrenheit) => kelvin_to_fahrenheit(value),
         _ => value, // If source and target units are the same, return value
@@ -57,11 +57,11 @@ fn kelvin_to_celsius(kelvin: f64) -> f64 {
 }
 
 fn fahrenheit_to_kelvin(fahrenheit: f64) -> f64 {
-    celsius_to_kelvin(fahrenheit_to_celsius(value))
+    celsius_to_kelvin(fahrenheit_to_celsius(fahrenheit))
 }
 
 fn kelvin_to_fahrenheit(kelvin: f64) -> f64 {
-    celsius_to_fahrenheit(kelvin_to_celsius(value))
+    celsius_to_fahrenheit(kelvin_to_celsius(kelvin))
 }
 
 // --- Test Suite for TemperatureUnit Conversions ---
