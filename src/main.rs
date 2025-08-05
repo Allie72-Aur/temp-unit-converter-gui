@@ -1,7 +1,6 @@
 /// A program to convert temperatures between Celsius, Fahrenheit, and Kelvin.
 /// prompts the user for type of conversion and temperature value,
 /// then performs the conversion and displays the result.
-
 mod temperature;
 use temperature::{convert_temperature, TemperatureUnit};
 
