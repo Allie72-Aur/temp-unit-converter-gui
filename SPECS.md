@@ -42,6 +42,7 @@ For this project, the following dependencies are needed:
 
 These are the directions that lead to the goal:
 
+- [X] Extract unit conversion logic to a seperate mod
 - [ ] Open a basic window
 - [ ] Add an input field for a numeric value
 - [ ] Add a dropdown menu for choosing the source unit

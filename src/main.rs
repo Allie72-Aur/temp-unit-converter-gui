@@ -2,6 +2,9 @@
 /// prompts the user for type of conversion and temperature value,
 /// then performs the conversion and displays the result.
 
+mod temperature;
+use temperature::{convert_temperature, TemperatureUnit};
+
 fn main() {
     loop {
         println!(
@@ -17,8 +20,16 @@ fn main() {
             "1" => {
                 let celsius = get_string("Enter temperature in Celsius: ");
                 if let Ok(temp) = celsius.parse::<f64>() {
-                    let fahrenheit = temp * 9.0 / 5.0 + 32.0;
-                    let kelvin = temp + 273.15;
+                    let fahrenheit = convert_temperature(
+                        temp,
+                        TemperatureUnit::Celsius,
+                        TemperatureUnit::Fahrenheit,
+                    );
+                    let kelvin = convert_temperature(
+                        temp,
+                        TemperatureUnit::Celsius,
+                        TemperatureUnit::Kelvin,
+                    );
                     println!("{}°C is {:.2}°F and {:.2}K", temp, fahrenheit, kelvin);
                 } else {
                     println!("Invalid input for Celsius.");
@@ -27,8 +38,16 @@ fn main() {
             "2" => {
                 let fahrenheit = get_string("Enter temperature in Fahrenheit: ");
                 if let Ok(temp) = fahrenheit.parse::<f64>() {
-                    let celsius = (temp - 32.0) * 5.0 / 9.0;
-                    let kelvin = celsius + 273.15;
+                    let celsius = convert_temperature(
+                        temp,
+                        TemperatureUnit::Fahrenheit,
+                        TemperatureUnit::Celsius,
+                    );
+                    let kelvin = convert_temperature(
+                        temp,
+                        TemperatureUnit::Fahrenheit,
+                        TemperatureUnit::Kelvin,
+                    );
                     println!("{}°F is {:.2}°C and {:.2}K", temp, celsius, kelvin);
                 } else {
                     println!("Invalid input for Fahrenheit.");
@@ -37,8 +56,16 @@ fn main() {
             "3" => {
                 let kelvin = get_string("Enter temperature in Kelvin: ");
                 if let Ok(temp) = kelvin.parse::<f64>() {
-                    let celsius = temp - 273.15;
-                    let fahrenheit = celsius * 9.0 / 5.0 + 32.0;
+                    let celsius = convert_temperature(
+                        temp,
+                        TemperatureUnit::Kelvin,
+                        TemperatureUnit::Celsius,
+                    );
+                    let fahrenheit = convert_temperature(
+                        temp,
+                        TemperatureUnit::Kelvin,
+                        TemperatureUnit::Fahrenheit,
+                    );
                     println!("{}K is {:.2}°C and {:.2}°F", temp, celsius, fahrenheit);
                 } else {
                     println!("Invalid input for Kelvin.");
@@ -46,6 +73,7 @@ fn main() {
             }
             _ => {
                 println!("Invalid choice, please select between 1-3.");
+                continue;
             }
         }
         // Prompt to continue or exit
@@ -59,16 +87,24 @@ fn main() {
 }
 
 /// Prompts the user for input
+///
+/// # Arguments
+/// * `prompt` - The prompt message to display to the user.
+///
+/// # Returns
+/// The user input as a `String`.
 fn get_string(prompt: &str) -> String {
     use std::io::{self, Write};
 
     print!("{}", prompt);
-    io::stdout().flush().unwrap(); // Ensure the prompt is printed before reading input
+    // Ensure the prompt is printed before reading input
+    io::stdout().flush().unwrap();
 
     let mut input = String::new();
     io::stdin()
         .read_line(&mut input)
         .expect("Failed to read line");
 
-    input.trim().to_string() // Return input without trailing whitespace
+    // Return input without trailing whitespace
+    input.trim().to_string()
 }

@@ -1,5 +1,5 @@
 [package]
-name = "temp-conv-gui"
+name = "temperature-unit-converter-gui"
 version = "0.1.0"
 edition = "2024"
 
