@@ -1,5 +1,5 @@
 /// # Temperature Unit Conversion Module
-/// This module provides functionality to convert temperatures between Celsius, 
+/// This module provides functionality to convert temperatures between Celsius,
 /// Fahrenheit, and Kelvin.
 
 /// Temperature Units Enum
@@ -28,18 +28,36 @@ pub fn convert_temperature(
     target_unit: TemperatureUnit,
 ) -> f64 {
     match (source_unit, target_unit) {
-        (TemperatureUnit::Celsius, TemperatureUnit::Fahrenheit) => value * 9.0 / 5.0 + 32.0,
-        (TemperatureUnit::Celsius, TemperatureUnit::Kelvin) => value + 273.15,
-        (TemperatureUnit::Fahrenheit, TemperatureUnit::Celsius) => (value - 32.0) * 5.0 / 9.0,
+        (TemperatureUnit::Celsius, TemperatureUnit::Fahrenheit) => celsius_to_fahrenheit(value),
+        (TemperatureUnit::Celsius, TemperatureUnit::Kelvin) => celsius_to_kelvin(value),
+        (TemperatureUnit::Fahrenheit, TemperatureUnit::Celsius) => fahrenheit_to_celsius(value),
         (TemperatureUnit::Fahrenheit, TemperatureUnit::Kelvin) => {
-            (value - 32.0) * 5.0 / 9.0 + 273.15
+            celsius_to_kelvin(fahrenheit_to_celsius(value))
         }
-        (TemperatureUnit::Kelvin, TemperatureUnit::Celsius) => value - 273.15,
+        (TemperatureUnit::Kelvin, TemperatureUnit::Celsius) => kelvin_to_celsius(value),
         (TemperatureUnit::Kelvin, TemperatureUnit::Fahrenheit) => {
-            (value - 273.15) * 9.0 / 5.0 + 32.0
+            celsius_to_fahrenheit(kelvin_to_celsius(value))
         }
         _ => value, // If source and target units are the same, return value
     }
+}
+
+// --- Private Helper Functions (not directly accessible outside this module) ---
+
+fn celsius_to_fahrenheit(celsius: f64) -> f64 {
+    (celsius * 9.0 / 5.0) + 32.0
+}
+
+fn celsius_to_kelvin(celsius: f64) -> f64 {
+    celsius + 273.15
+}
+
+fn fahrenheit_to_celsius(fahrenheit: f64) -> f64 {
+    (fahrenheit - 32.0) * 5.0 / 9.0
+}
+
+fn kelvin_to_celsius(kelvin: f64) -> f64 {
+    kelvin - 273.15
 }
 
 // --- Test Suite for TemperatureUnit Conversions ---
